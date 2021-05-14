@@ -24,7 +24,7 @@ def detect_face(frame, faceNet):
 
     for i in range(0, detections.shape[2]):
         confidence = detections[0, 0, i, 2]
-        if confidence > confidence_level:
+        if confidence >= confidence_level:
             box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
             (startX, startY, endX, endY) = box.astype("int")
             (startX, startY) = (max(0, startX), max(0, startY))
@@ -48,10 +48,7 @@ def start_training(count):
         for box in zip(locs):
             for face in box:
                 (startX, startY, endX, endY) = face
-                color = (0, 255, 0)
-                cv2.putText(frame, "face", (startX, startY - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
-                cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
+                cv2.rectangle(frame, (startX, startY), (endX, endY), (0, 255, 0), 2)
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 face = gray[startY:endY, startX:endX]
                 cv2.imwrite('%s/%s.png' % (path, count), face)
