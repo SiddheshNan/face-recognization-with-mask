@@ -60,16 +60,15 @@ def start():
                 prediction = model.predict(face_resize)
 
                 if prediction[1] >= prediction_level:
-                    print('%s - %.0f' % (prediction[0], prediction[1]))
+                    print('%s - %.0f' % (names[prediction[0]], prediction[1]))
                     cv2.rectangle(frame, (startX, startY), (endX, endY), green_color, 2)
-                    cv2.putText(frame, '%s - %.0f' % (prediction[0], prediction[1]), (startX - 10, startY - 10),
+                    cv2.putText(frame, '%s - %.0f' % (names[prediction[0]], prediction[1]), (startX - 10, startY - 10),
                                 cv2.FONT_HERSHEY_PLAIN, 1.3, green_color, 1)
                 else:
                     print('face not recognized')
                     cv2.rectangle(frame, (startX, startY), (endX, endY), red_color, 2)
                     cv2.putText(frame, 'not recognized', (startX - 10, startY - 10),
                                 cv2.FONT_HERSHEY_PLAIN, 1.3, red_color, 1)
-
 
         cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF
